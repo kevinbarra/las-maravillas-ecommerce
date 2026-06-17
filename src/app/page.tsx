@@ -7,7 +7,7 @@ import LogisticsSection from "./components/LogisticsSection";
 import LoyaltySection from "./components/LoyaltySection";
 import { useCart } from "./context/CartContext";
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const meatProducts = [
   {
@@ -91,9 +91,61 @@ const accessoryProducts = [
   }
 ];
 
+const butcherCuts = [
+  {
+    id: "ribeye",
+    name: "Ribeye Reserva",
+    origin: "Lomo Alto",
+    description: "Corte de gran sabor con excelente ojo de grasa y marmoleo abundante. Ideal para asar a fuego directo alto.",
+    marbling: 5,
+    tenderness: 4,
+    juiciness: 5,
+    method: "Fuego Directo / Término Medio",
+    thickness: "1.5 a 2 pulgadas",
+    image: "/las-maravillas-ecommerce/product_ribeye.png"
+  },
+  {
+    id: "tomahawk",
+    name: "Tomahawk Reserva",
+    origin: "Costillar",
+    description: "Imponente ribeye con el hueso completo del costillar expuesto al estilo francés. Retiene jugos extraordinariamente durante la cocción.",
+    marbling: 5,
+    tenderness: 4,
+    juiciness: 5,
+    method: "Sellado Inverso / Asado Lento",
+    thickness: "2 a 2.5 pulgadas",
+    image: "https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?q=80&w=2970&auto=format&fit=crop"
+  },
+  {
+    id: "picana",
+    name: "Picaña Brangus",
+    origin: "Cadera",
+    description: "Corte tradicional sudamericano. Destaca por su gruesa capa de grasa que le aporta un sabor espectacular al derretirse en la parrilla.",
+    marbling: 4,
+    tenderness: 4,
+    juiciness: 4.5,
+    method: "Espadas / Asado Indirecto",
+    thickness: "1 pulgada",
+    image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop"
+  },
+  {
+    id: "arrachera",
+    name: "Arrachera Marinada",
+    origin: "Diafragma",
+    description: "Corte sumamente popular en México. Es sumamente suave gracias a nuestra receta de marinado de la casa. Muy jugoso.",
+    marbling: 3,
+    tenderness: 5,
+    juiciness: 4.5,
+    method: "Fuego Directo Rápido",
+    thickness: "Fileteada",
+    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2787&auto=format&fit=crop"
+  }
+];
+
 export default function Home() {
   const { addToCart, openSidebar } = useCart();
   const [isButcherOpen, setIsButcherOpen] = useState(false);
+  const [selectedCut, setSelectedCut] = useState('ribeye');
 
   const handleAddToCart = (product: any) => {
     addToCart({
@@ -179,6 +231,63 @@ export default function Home() {
                 <h3 className="font-serif text-lg tracking-wide text-white mb-2">Orgullo Veracruzano</h3>
                 <p className="text-xs text-gray-400 font-light tracking-wide uppercase">Nacidos y criados en Los Tuxtlas, Veracruz</p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Nuestras Raíces Section */}
+        <section className="py-24 bg-gradient-to-b from-[#1A1A1A] to-[#0a0a0a] border-b border-[#C5A059]/10">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="relative rounded-2xl overflow-hidden border border-[#C5A059]/20 shadow-2xl group"
+              >
+                <img 
+                  src="/las-maravillas-ecommerce/rancho_brangus_tuxtlas.png" 
+                  alt="Ganado Brangus en Rancho Las Maravillas" 
+                  className="w-full h-[450px] object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute bottom-6 left-6 right-6 text-left">
+                  <span className="text-[10px] uppercase tracking-widest text-[#C5A059] font-bold">Rancho Las Maravillas</span>
+                  <h4 className="text-white text-lg font-serif mt-1">Crianza libre en pastizales de Los Tuxtlas, Veracruz</h4>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="space-y-6 text-left"
+              >
+                <span className="text-xs uppercase tracking-widest text-[#C5A059] font-bold">Nuestra Identidad</span>
+                <h2 className="text-4xl md:text-5xl font-serif text-white tracking-wide">Orgullo Veracruzano</h2>
+                <div className="w-20 h-1 bg-[#C5A059]"></div>
+                
+                <p className="text-gray-300 font-light leading-relaxed text-lg">
+                  En el corazón de <strong>Los Tuxtlas, Veracruz</strong>, criamos con pasión y respeto. Nuestro ganado es una cruza Brangus minuciosamente seleccionada: la rusticidad y fuerza del Brahman unida a la inigualable terneza y marmoleo del Angus.
+                </p>
+                
+                <p className="text-gray-400 font-light leading-relaxed">
+                  Criados en libre pastoreo bajo el clima tropical y alimentados con una dieta balanceada en nuestro propio rastro con certificación TIF. El resultado es un producto 100% mexicano, local y sustentable, llevando la frescura del rancho directo a tu mesa.
+                </p>
+
+                <div className="pt-6 grid grid-cols-2 gap-6 border-t border-gray-800">
+                  <div>
+                    <h5 className="text-[#C5A059] font-serif text-2xl font-bold">100%</h5>
+                    <p className="text-[10px] uppercase tracking-wider text-gray-500 mt-1">Origen Veracruzano</p>
+                  </div>
+                  <div>
+                    <h5 className="text-[#C5A059] font-serif text-2xl font-bold">TIF 353</h5>
+                    <p className="text-[10px] uppercase tracking-wider text-gray-500 mt-1">Certificación Federal</p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -298,6 +407,138 @@ export default function Home() {
           </div>
         </footer>
       </main>
+
+      {/* Butcher's Block Modal */}
+      <AnimatePresence>
+        {isButcherOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 overflow-y-auto" onClick={() => setIsButcherOpen(false)}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-5xl bg-[#111] border border-[#C5A059]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto md:h-[650px]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button 
+                onClick={() => setIsButcherOpen(false)}
+                className="absolute top-6 right-6 z-50 w-10 h-10 bg-black/60 rounded-full flex items-center justify-center text-[#C5A059] border border-[#C5A059]/30 hover:bg-[#C5A059] hover:text-black transition-colors cursor-pointer"
+                aria-label="Cerrar Guía"
+              >
+                ✕
+              </button>
+
+              {/* Left Panel: List of cuts */}
+              <div className="flex-1 p-8 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-gray-800 bg-black/30">
+                <div>
+                  <span className="text-xs uppercase tracking-widest text-[#C5A059] font-bold">The Butcher's Block</span>
+                  <h3 className="text-3xl font-serif text-white mt-2 mb-4">Guía Brangus</h3>
+                  <p className="text-gray-400 text-sm font-light leading-relaxed mb-8">
+                    Nuestra genética Brangus destaca por su excelente capacidad de marmoleo y suavidad. Haz clic en un corte para explorar sus atributos.
+                  </p>
+                </div>
+
+                {/* Interactive Cuts List */}
+                <div className="space-y-3">
+                  {butcherCuts.map((cut) => (
+                    <button
+                      key={cut.id}
+                      onClick={() => setSelectedCut(cut.id)}
+                      className={`w-full text-left p-4 rounded-xl border transition-all duration-300 flex justify-between items-center cursor-pointer ${
+                        selectedCut === cut.id 
+                          ? 'border-[#C5A059] bg-[#C5A059]/10 text-white font-bold' 
+                          : 'border-gray-800 hover:border-gray-700 text-gray-400 hover:text-white bg-transparent'
+                      }`}
+                    >
+                      <span className="font-serif text-lg">{cut.name}</span>
+                      <span className="text-xs uppercase tracking-widest text-[#C5A059]/80">{cut.origin}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-8 text-xs text-gray-500 font-mono">
+                  ★ CERTIFICACIÓN TIF 353 | ORIGEN LOS TUXTLAS
+                </div>
+              </div>
+
+              {/* Right Panel: Cut details */}
+              <div className="flex-1 p-8 md:p-12 flex flex-col justify-between bg-gradient-to-br from-[#111] to-[#1A1A1A]">
+                <AnimatePresence mode="wait">
+                  {(() => {
+                    const cut = butcherCuts.find(c => c.id === selectedCut) || butcherCuts[0];
+                    return (
+                      <motion.div
+                        key={cut.id}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="flex flex-col h-full justify-between"
+                      >
+                        <div>
+                          {/* Image Preview */}
+                          <div className="relative h-48 w-full rounded-xl overflow-hidden border border-gray-800 mb-6 bg-black">
+                            <img 
+                              src={cut.image} 
+                              alt={cut.name} 
+                              className="w-full h-full object-cover opacity-90"
+                            />
+                          </div>
+
+                          <h4 className="text-2xl font-serif text-[#C5A059] mb-3">{cut.name}</h4>
+                          <p className="text-gray-300 font-light text-sm leading-relaxed mb-6 h-16 overflow-y-auto">{cut.description}</p>
+
+                          {/* Stats */}
+                          <div className="space-y-4">
+                            <div>
+                              <div className="flex justify-between text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
+                                <span>Marmoleo</span>
+                                <span className="text-[#C5A059]">{cut.marbling}/5</span>
+                              </div>
+                              <div className="h-1.5 w-full bg-black rounded-full overflow-hidden">
+                                <div className="h-full bg-[#C5A059]" style={{ width: `${(cut.marbling / 5) * 100}%` }}></div>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="flex justify-between text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
+                                <span>Suavidad</span>
+                                <span className="text-[#C5A059]">{cut.tenderness}/5</span>
+                              </div>
+                              <div className="h-1.5 w-full bg-black rounded-full overflow-hidden">
+                                <div className="h-full bg-[#C5A059]" style={{ width: `${(cut.tenderness / 5) * 100}%` }}></div>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="flex justify-between text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
+                                <span>Jugosidad</span>
+                                <span className="text-[#C5A059]">{cut.juiciness}/5</span>
+                              </div>
+                              <div className="h-1.5 w-full bg-black rounded-full overflow-hidden">
+                                <div className="h-full bg-[#C5A059]" style={{ width: `${(cut.juiciness / 5) * 100}%` }}></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-8 pt-6 border-t border-gray-800 flex justify-between items-center">
+                          <div>
+                            <span className="text-[10px] text-gray-500 uppercase tracking-widest block">Método Sugerido</span>
+                            <span className="text-xs text-gray-300 font-bold uppercase tracking-wider mt-1 block">{cut.method}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-gray-500 uppercase tracking-widest block">Grosor Mínimo</span>
+                            <span className="text-xs text-gray-300 font-bold uppercase tracking-wider mt-1 block">{cut.thickness}</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })()}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

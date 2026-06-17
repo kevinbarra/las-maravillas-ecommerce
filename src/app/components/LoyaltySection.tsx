@@ -29,7 +29,7 @@ export default function LoyaltySection() {
                 Beneficios Exclusivos
               </h2>
               <p className="text-gray-400 text-lg mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">
-                La lealtad tiene un sabor excepcional. Inicia sesión en tu portal web y <span style={{ color: '#C5A059' }} className="font-medium">vincula tu tarjeta física de cliente frecuente</span>. Sube de nivel y desbloquea acceso anticipado a cortes Reserva.
+                La lealtad tiene un sabor excepcional. Regístrate en nuestro <span style={{ color: '#C5A059' }} className="font-medium">Club Digital Las Maravillas</span> y acumula puntos automáticamente con cada compra en línea o sucursal. Sube de nivel y desbloquea acceso anticipado a lanzamientos exclusivos de nuestra Línea Reserva.
               </p>
               
               <ul className="space-y-5 mb-10 text-left inline-block lg:block">
@@ -55,10 +55,10 @@ export default function LoyaltySection() {
                   Mi Dashboard
                 </button>
                 <button 
-                  className="px-8 py-4 text-sm uppercase tracking-widest font-bold rounded-sm border transition-all hover:bg-white/5"
+                  className="px-8 py-4 text-sm uppercase tracking-widest font-bold rounded-sm border transition-all hover:bg-[#C5A059] hover:text-black cursor-pointer"
                   style={{ borderColor: '#C5A059', color: '#C5A059' }}
                 >
-                  Vincular Tarjeta
+                  Crear Cuenta Digital
                 </button>
               </div>
             </div>
