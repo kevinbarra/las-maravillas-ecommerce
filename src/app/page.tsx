@@ -147,14 +147,45 @@ export default function Home() {
   const [isButcherOpen, setIsButcherOpen] = useState(false);
   const [selectedCut, setSelectedCut] = useState('ribeye');
 
+  // States for the product configurator
+  const [configuringProduct, setConfiguringProduct] = useState<any>(null);
+  const [thickness, setThickness] = useState<string>('estandar');
+  const [weight, setWeight] = useState<number>(1.0);
+
   const handleAddToCart = (product: any) => {
+    if (product.pairing) {
+      // It's a meat cut! Open the configurator
+      setConfiguringProduct(product);
+      setThickness('estandar');
+      setWeight(product.unit === 'kg' ? 1.0 : 1);
+    } else {
+      // It's an accessory! Add directly to cart
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        image: product.image
+      });
+      openSidebar();
+    }
+  };
+
+  const handleConfirmConfig = () => {
+    if (!configuringProduct) return;
+    
+    const thicknessLabel = thickness === 'delgado' ? 'Delgado (1")' : thickness === 'grueso' ? 'Steakhouse (2")' : 'Estándar (1.5")';
+    const weightLabel = configuringProduct.unit === 'kg' ? `${weight.toFixed(1)}kg` : `${weight} pza`;
+    
     addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
+      id: `${configuringProduct.id}-${thickness}-${weight}`,
+      name: `${configuringProduct.name} (${thicknessLabel} - ${weightLabel})`,
+      price: configuringProduct.price * weight,
       quantity: 1,
-      image: product.image
+      image: configuringProduct.image
     });
+    
+    setConfiguringProduct(null);
     openSidebar();
   };
 
@@ -412,57 +443,57 @@ export default function Home() {
       <AnimatePresence>
         {isButcherOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 overflow-y-auto" onClick={() => setIsButcherOpen(false)}>
+            {/* Close button - Pinned fixed to the viewport on mobile, absolute on desktop */}
+            <button 
+              onClick={() => setIsButcherOpen(false)}
+              className="fixed md:absolute top-4 right-4 md:top-6 md:right-6 z-[60] w-10 h-10 bg-black/80 rounded-full flex items-center justify-center text-[#C5A059] border border-[#C5A059]/30 hover:bg-[#C5A059] hover:text-black transition-colors cursor-pointer"
+              aria-label="Cerrar Guía"
+            >
+              ✕
+            </button>
+
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-5xl bg-[#111] border border-[#C5A059]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto md:h-[650px]"
+              className="relative w-full max-w-5xl bg-[#111] border border-[#C5A059]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-[85vh] md:h-[650px]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close button */}
-              <button 
-                onClick={() => setIsButcherOpen(false)}
-                className="absolute top-6 right-6 z-50 w-10 h-10 bg-black/60 rounded-full flex items-center justify-center text-[#C5A059] border border-[#C5A059]/30 hover:bg-[#C5A059] hover:text-black transition-colors cursor-pointer"
-                aria-label="Cerrar Guía"
-              >
-                ✕
-              </button>
-
               {/* Left Panel: List of cuts */}
-              <div className="flex-1 p-8 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-gray-800 bg-black/30">
+              <div className="w-full md:w-2/5 p-6 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-gray-800 bg-black/30 flex-shrink-0">
                 <div>
                   <span className="text-xs uppercase tracking-widest text-[#C5A059] font-bold">The Butcher's Block</span>
-                  <h3 className="text-3xl font-serif text-white mt-2 mb-4">Guía Brangus</h3>
-                  <p className="text-gray-400 text-sm font-light leading-relaxed mb-8">
-                    Nuestra genética Brangus destaca por su excelente capacidad de marmoleo y suavidad. Haz clic en un corte para explorar sus atributos.
+                  <h3 className="text-2xl md:text-3xl font-serif text-white mt-1 md:mt-2 mb-2 md:mb-4">Guía Brangus</h3>
+                  <p className="text-gray-400 text-xs md:text-sm font-light leading-relaxed mb-4 md:mb-8">
+                    Nuestra genética Brangus destaca por su excelente capacidad de marmoleo y suavidad. Explora los atributos de cada corte.
                   </p>
                 </div>
 
-                {/* Interactive Cuts List */}
-                <div className="space-y-3">
+                {/* Interactive Cuts List (Horizontal on mobile, vertical on desktop) */}
+                <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 gap-3 md:space-y-3 scrollbar-hide">
                   {butcherCuts.map((cut) => (
                     <button
                       key={cut.id}
                       onClick={() => setSelectedCut(cut.id)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all duration-300 flex justify-between items-center cursor-pointer ${
+                      className={`flex-shrink-0 md:w-full text-left p-3.5 md:p-4 rounded-xl border transition-all duration-300 flex justify-between items-center cursor-pointer ${
                         selectedCut === cut.id 
                           ? 'border-[#C5A059] bg-[#C5A059]/10 text-white font-bold' 
                           : 'border-gray-800 hover:border-gray-700 text-gray-400 hover:text-white bg-transparent'
                       }`}
                     >
-                      <span className="font-serif text-lg">{cut.name}</span>
-                      <span className="text-xs uppercase tracking-widest text-[#C5A059]/80">{cut.origin}</span>
+                      <span className="font-serif text-sm md:text-lg">{cut.name}</span>
+                      <span className="text-[10px] uppercase tracking-widest text-[#C5A059]/80 hidden md:inline">{cut.origin}</span>
                     </button>
                   ))}
                 </div>
 
-                <div className="mt-8 text-xs text-gray-500 font-mono">
+                <div className="hidden md:block mt-8 text-xs text-gray-500 font-mono">
                   ★ CERTIFICACIÓN TIF 353 | ORIGEN LOS TUXTLAS
                 </div>
               </div>
 
               {/* Right Panel: Cut details */}
-              <div className="flex-1 p-8 md:p-12 flex flex-col justify-between bg-gradient-to-br from-[#111] to-[#1A1A1A]">
+              <div className="flex-1 p-6 md:p-12 flex flex-col justify-between bg-gradient-to-br from-[#111] to-[#1A1A1A] overflow-y-auto md:overflow-visible">
                 <AnimatePresence mode="wait">
                   {(() => {
                     const cut = butcherCuts.find(c => c.id === selectedCut) || butcherCuts[0];
@@ -473,11 +504,11 @@ export default function Home() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
                         transition={{ duration: 0.3 }}
-                        className="flex flex-col h-full justify-between"
+                        className="flex flex-col h-full justify-between space-y-6 md:space-y-0"
                       >
                         <div>
                           {/* Image Preview */}
-                          <div className="relative h-48 w-full rounded-xl overflow-hidden border border-gray-800 mb-6 bg-black">
+                          <div className="relative h-40 md:h-48 w-full rounded-xl overflow-hidden border border-gray-800 mb-4 md:mb-6 bg-black flex-shrink-0">
                             <img 
                               src={cut.image} 
                               alt={cut.name} 
@@ -485,13 +516,13 @@ export default function Home() {
                             />
                           </div>
 
-                          <h4 className="text-2xl font-serif text-[#C5A059] mb-3">{cut.name}</h4>
-                          <p className="text-gray-300 font-light text-sm leading-relaxed mb-6 h-16 overflow-y-auto">{cut.description}</p>
+                          <h4 className="text-xl md:text-2xl font-serif text-[#C5A059] mb-2 md:mb-3">{cut.name}</h4>
+                          <p className="text-gray-300 font-light text-xs md:text-sm leading-relaxed mb-4 md:mb-6">{cut.description}</p>
 
                           {/* Stats */}
-                          <div className="space-y-4">
+                          <div className="space-y-3 md:space-y-4">
                             <div>
-                              <div className="flex justify-between text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
+                              <div className="flex justify-between text-[10px] md:text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
                                 <span>Marmoleo</span>
                                 <span className="text-[#C5A059]">{cut.marbling}/5</span>
                               </div>
@@ -500,7 +531,7 @@ export default function Home() {
                               </div>
                             </div>
                             <div>
-                              <div className="flex justify-between text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
+                              <div className="flex justify-between text-[10px] md:text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
                                 <span>Suavidad</span>
                                 <span className="text-[#C5A059]">{cut.tenderness}/5</span>
                               </div>
@@ -509,7 +540,7 @@ export default function Home() {
                               </div>
                             </div>
                             <div>
-                              <div className="flex justify-between text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
+                              <div className="flex justify-between text-[10px] md:text-xs text-gray-400 mb-1 font-bold uppercase tracking-wider">
                                 <span>Jugosidad</span>
                                 <span className="text-[#C5A059]">{cut.juiciness}/5</span>
                               </div>
@@ -520,20 +551,182 @@ export default function Home() {
                           </div>
                         </div>
 
-                        <div className="mt-8 pt-6 border-t border-gray-800 flex justify-between items-center">
+                        <div className="pt-4 md:pt-6 border-t border-gray-800 flex justify-between items-center flex-shrink-0">
                           <div>
-                            <span className="text-[10px] text-gray-500 uppercase tracking-widest block">Método Sugerido</span>
-                            <span className="text-xs text-gray-300 font-bold uppercase tracking-wider mt-1 block">{cut.method}</span>
+                            <span className="text-[9px] md:text-[10px] text-gray-500 uppercase tracking-widest block">Método Sugerido</span>
+                            <span className="text-[11px] md:text-xs text-gray-300 font-bold uppercase tracking-wider mt-1 block">{cut.method}</span>
                           </div>
                           <div>
-                            <span className="text-[10px] text-gray-500 uppercase tracking-widest block">Grosor Mínimo</span>
-                            <span className="text-xs text-gray-300 font-bold uppercase tracking-wider mt-1 block">{cut.thickness}</span>
+                            <span className="text-[9px] md:text-[10px] text-gray-500 uppercase tracking-widest block">Grosor Mínimo</span>
+                            <span className="text-[11px] md:text-xs text-gray-300 font-bold uppercase tracking-wider mt-1 block">{cut.thickness}</span>
                           </div>
                         </div>
                       </motion.div>
                     );
                   })()}
                 </AnimatePresence>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Product Configurator Drawer */}
+      <AnimatePresence>
+        {configuringProduct && (
+          <div className="fixed inset-0 z-50 flex justify-end">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={() => setConfiguringProduct(null)}
+            />
+            
+            {/* Drawer Panel */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="relative w-full sm:w-[480px] h-full bg-[#111] border-l border-[#C5A059]/20 shadow-2xl z-10 flex flex-col justify-between"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-800">
+                <h3 className="text-xl font-serif text-white">Personalizar Corte</h3>
+                <button 
+                  onClick={() => setConfiguringProduct(null)}
+                  className="p-2 text-gray-400 hover:text-[#C5A059] transition-colors rounded-full cursor-pointer"
+                  aria-label="Cerrar"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Scrollable Content */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-8">
+                {/* Product info */}
+                <div className="flex gap-4 items-center">
+                  <div className="w-20 h-20 rounded-lg overflow-hidden border border-gray-800 flex-shrink-0 bg-black">
+                    <img src={configuringProduct.image} alt={configuringProduct.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-widest text-[#C5A059] font-bold bg-[#C5A059]/10 px-2 py-0.5 rounded">
+                      {configuringProduct.badge || 'Línea Reserva'}
+                    </span>
+                    <h4 className="text-xl font-serif text-white mt-1">{configuringProduct.name}</h4>
+                    <p className="text-gray-400 text-xs mt-0.5">${configuringProduct.price.toFixed(2)} MXN / {configuringProduct.unit}</p>
+                  </div>
+                </div>
+
+                {/* Selector: Grosor */}
+                <div className="space-y-3">
+                  <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold block">1. Grosor del Corte</label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { id: 'delgado', name: 'Delgado (1")', desc: 'Cocción Rápida' },
+                      { id: 'estandar', name: 'Estándar (1.5")', desc: 'El Recomendado' },
+                      { id: 'grueso', name: 'Steakhouse (2")', desc: 'Asado Lento' }
+                    ].map((g) => (
+                      <button
+                        key={g.id}
+                        onClick={() => setThickness(g.id)}
+                        className={`p-3 rounded-lg border text-center transition-all cursor-pointer ${
+                          thickness === g.id 
+                            ? 'border-[#C5A059] bg-[#C5A059]/10 text-white' 
+                            : 'border-gray-800 text-gray-400 hover:border-gray-700 hover:text-white'
+                        }`}
+                      >
+                        <div className="text-xs font-bold">{g.name}</div>
+                        <div className="text-[8px] uppercase tracking-wider text-gray-500 mt-1">{g.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Selector: Peso / Porción */}
+                <div className="space-y-3">
+                  <label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold block">2. Peso / Porciones</label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {configuringProduct.unit === 'kg' ? (
+                      [
+                        { value: 0.5, label: '0.5 kg', desc: '1 - 2 Personas' },
+                        { value: 1.0, label: '1.0 kg', desc: '3 - 4 Personas' },
+                        { value: 1.5, label: '1.5 kg', desc: '5 - 6 Personas' }
+                      ].map((w) => (
+                        <button
+                          key={w.value}
+                          onClick={() => setWeight(w.value)}
+                          className={`p-3 rounded-lg border text-center transition-all cursor-pointer ${
+                            weight === w.value 
+                              ? 'border-[#C5A059] bg-[#C5A059]/10 text-white' 
+                              : 'border-gray-800 text-gray-400 hover:border-gray-700 hover:text-white'
+                          }`}
+                        >
+                          <div className="text-xs font-bold">{w.label}</div>
+                          <div className="text-[8px] uppercase tracking-wider text-gray-500 mt-1">{w.desc}</div>
+                        </button>
+                      ))
+                    ) : (
+                      [
+                        { value: 1, label: '1 pza', desc: '~900g' },
+                        { value: 2, label: '2 pzas', desc: '~1.8kg' },
+                        { value: 3, label: '3 pzas', desc: '~2.7kg' }
+                      ].map((w) => (
+                        <button
+                          key={w.value}
+                          onClick={() => setWeight(w.value)}
+                          className={`p-3 rounded-lg border text-center transition-all cursor-pointer ${
+                            weight === w.value 
+                              ? 'border-[#C5A059] bg-[#C5A059]/10 text-white' 
+                              : 'border-gray-800 text-gray-400 hover:border-gray-700 hover:text-white'
+                          }`}
+                        >
+                          <div className="text-xs font-bold">{w.label}</div>
+                          <div className="text-[8px] uppercase tracking-wider text-gray-500 mt-1">{w.desc}</div>
+                        </button>
+                      ))
+                    )}
+                  </div>
+                </div>
+
+                {/* Tips / Maridaje */}
+                <div className="p-4 bg-black/40 border border-gray-800 rounded-lg space-y-2">
+                  <span className="text-[10px] uppercase tracking-widest text-[#C5A059] font-bold block">💡 Tip del Maestro Parrillero</span>
+                  <p className="text-xs text-gray-400 font-light leading-relaxed">
+                    {thickness === 'delgado' && 'Ideal para asar rápidamente a fuego alto directo. Evita cocinar de más para conservar la jugosidad.'}
+                    {thickness === 'estandar' && 'El grosor balanceado. Sella por 4 minutos de cada lado a fuego directo para un término medio perfecto.'}
+                    {thickness === 'grueso' && 'Recomendamos técnica de sellado inverso (fuego indirecto lento hasta llegar a 48°C interno, luego sella a fuego directo).'}
+                  </p>
+                  {configuringProduct.pairing && (
+                    <div className="pt-2 border-t border-gray-800/40 text-[9px] uppercase tracking-widest text-gray-500 flex gap-1 items-center">
+                      <span>Maridaje sugerido:</span>
+                      <span className="text-gray-300 font-bold">{configuringProduct.pairing}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Footer with Price and Add Button */}
+              <div className="p-6 border-t border-gray-800 bg-[#151515]">
+                <div className="flex justify-between items-center mb-6">
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-gray-500 block">Total Estimado</span>
+                    <span className="text-xl font-bold text-[#C5A059] mt-1 block">
+                      ${(configuringProduct.price * weight).toFixed(2)} <span className="text-[10px] text-gray-500 font-normal">MXN</span>
+                    </span>
+                  </div>
+                  <div className="text-right text-xs text-gray-500">
+                    Peso: {configuringProduct.unit === 'kg' ? `${weight.toFixed(1)} kg` : `${weight} pza(s)`}
+                  </div>
+                </div>
+                <button
+                  onClick={handleConfirmConfig}
+                  className="w-full bg-[#C5A059] text-[#1A1A1A] py-4 uppercase text-xs font-bold tracking-widest hover:bg-[#b08e4d] transition-colors rounded-sm cursor-pointer"
+                >
+                  Confirmar y Agregar
+                </button>
               </div>
             </motion.div>
           </div>
