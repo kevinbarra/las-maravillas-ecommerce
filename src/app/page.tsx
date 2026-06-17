@@ -16,7 +16,8 @@ const meatProducts = [
     price: 1250.00,
     unit: "kg",
     image: "/las-maravillas-ecommerce/product_ribeye.png",
-    badge: "Prime"
+    badge: "Prime",
+    pairing: "Salsa de Habanero Tatemado"
   },
   {
     id: "tomahawk-reserva",
@@ -25,7 +26,8 @@ const meatProducts = [
     price: 1850.00,
     unit: "pza",
     image: "https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?q=80&w=2970&auto=format&fit=crop",
-    badge: "Reserva"
+    badge: "Reserva",
+    pairing: "Carbón de Mezquite"
   },
   {
     id: "picana-wagyu",
@@ -34,7 +36,8 @@ const meatProducts = [
     price: 950.00,
     unit: "kg",
     image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop",
-    badge: null
+    badge: null,
+    pairing: "Sal Ahumada"
   },
   {
     id: "arrachera",
@@ -43,18 +46,19 @@ const meatProducts = [
     price: 420.00,
     unit: "kg",
     image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2787&auto=format&fit=crop",
-    badge: "Best Seller"
+    badge: "Best Seller",
+    pairing: "Salsa Verde Rústica"
   }
 ];
 
 const accessoryProducts = [
   {
     id: "salsa-habanero",
-    name: "Salsa de Habanero Tatemado",
+    name: "Salsa de Habanero",
     description: "Nuestra receta de la casa, el complemento perfecto.",
     price: 95.00,
     unit: "pza",
-    image: "https://images.unsplash.com/photo-1581486586071-2098b1eb7d0d?q=80&w=2940&auto=format&fit=crop",
+    image: "/las-maravillas-ecommerce/product_salsa_habanero.png",
     badge: null
   },
   {
@@ -72,7 +76,7 @@ const accessoryProducts = [
     description: "Sabor ahumado tradicional e intenso para tu carne.",
     price: 180.00,
     unit: "saco",
-    image: "https://images.unsplash.com/photo-1550989397-2a54b3ee8cb2?q=80&w=2940&auto=format&fit=crop",
+    image: "/las-maravillas-ecommerce/product_carbon.png",
     badge: null
   },
   {
@@ -81,7 +85,7 @@ const accessoryProducts = [
     description: "La experiencia completa de asado en casa.",
     price: 4500.00,
     unit: "pza",
-    image: "https://images.unsplash.com/photo-1522204561063-4402ebf917cb?q=80&w=2940&auto=format&fit=crop",
+    image: "/las-maravillas-ecommerce/product_asador.png",
     badge: null
   }
 ];
@@ -122,9 +126,17 @@ export default function Home() {
           </div>
         )}
       </div>
-      <div className="p-8 text-center flex flex-col flex-grow">
+      <div className="p-8 text-center flex flex-col flex-grow relative">
         <h3 className="font-serif text-2xl mb-3 text-white">{product.name}</h3>
-        <p className="text-gray-400 text-sm mb-6 h-10 line-clamp-2 font-light leading-relaxed">{product.description}</p>
+        <p className="text-gray-400 text-sm mb-4 h-10 line-clamp-2 font-light leading-relaxed">{product.description}</p>
+        
+        {/* Cross-Selling Engine */}
+        {product.pairing && (
+          <div className="mb-4 text-[11px] uppercase tracking-wider text-[#C5A059] font-medium opacity-80 bg-[#C5A059]/10 py-2 px-3 rounded inline-block mx-auto">
+            💡 Maridaje: {product.pairing}
+          </div>
+        )}
+
         <div className="text-xl font-bold font-sans text-[#C5A059] mb-8 mt-auto">
           ${product.price.toFixed(2)} <span className="text-xs font-normal text-gray-500 tracking-widest uppercase">MXN / {product.unit}</span>
         </div>
@@ -184,6 +196,45 @@ export default function Home() {
               {meatProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Butcher's Block Guide */}
+        <section className="py-24 bg-gradient-to-b from-[#0a0a0a] to-[#111] relative overflow-hidden">
+          <div className="absolute inset-0 bg-[#C5A059] opacity-5 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:20px_20px]"></div>
+          <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mx-auto"
+            >
+              <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">The Butcher's Block</h2>
+              <p className="text-xl text-gray-400 font-light tracking-wide mb-12">Navega por nuestra guía interactiva de cortes para encontrar el perfil de sabor perfecto para tu próxima parrillada.</p>
+              
+              <div className="relative w-full aspect-[2/1] border border-[#C5A059]/30 bg-black/50 rounded-2xl flex items-center justify-center group cursor-pointer overflow-hidden backdrop-blur-sm">
+                <div className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1603048297172-c92544798d5e?q=80&w=2940&auto=format&fit=crop')" }}></div>
+                <div className="z-10 bg-black/80 px-8 py-4 rounded-full border border-[#C5A059] text-[#C5A059] font-bold tracking-widest uppercase text-sm hover:bg-[#C5A059] hover:text-black transition-colors">
+                  Abrir Guía Interactiva
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Subscription Box Banner */}
+        <section className="py-16 bg-[#6B1D2A] relative overflow-hidden border-y border-[#8B2536]">
+          <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+          <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="text-center md:text-left">
+              <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Arma tu Caja Mensual</h2>
+              <p className="text-white/80 text-lg font-light max-w-xl">Suscríbete y recibe tus cortes favoritos directamente en tu puerta cada mes. Ahorra un 15% y asegura tu inventario de fin de semana.</p>
+            </div>
+            <div>
+              <button className="px-8 py-4 bg-white text-[#6B1D2A] font-bold uppercase tracking-widest text-sm hover:bg-gray-100 transition-colors shadow-2xl rounded-sm whitespace-nowrap">
+                Configurar mi Caja
+              </button>
             </div>
           </div>
         </section>
