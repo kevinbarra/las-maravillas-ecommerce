@@ -1,64 +1,82 @@
+'use client';
+
 import React from 'react';
+import { motion } from 'framer-motion';
 
 export default function LoyaltySection() {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div 
-          className="relative rounded-3xl overflow-hidden shadow-2xl"
-          style={{ backgroundColor: '#1A1A1A' }}
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0a0a]">
+      <div className="max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative rounded-[2rem] overflow-hidden shadow-2xl border border-gray-800"
+          style={{ backgroundColor: '#111' }}
         >
           {/* Decorative accents */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#6B1D2A] to-transparent opacity-20 rounded-bl-full pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-[#C5A059] to-transparent opacity-10 rounded-tr-full pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#6B1D2A] opacity-20 blur-3xl rounded-full pointer-events-none transform translate-x-1/3 -translate-y-1/3"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#C5A059] opacity-10 blur-3xl rounded-full pointer-events-none transform -translate-x-1/3 translate-y-1/3"></div>
 
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between p-8 md:p-16 gap-10">
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between p-10 md:p-20 gap-16">
             
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-block px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4" style={{ backgroundColor: '#6B1D2A', color: '#C5A059' }}>
-                Programa de Recompensas Digital
+              <div className="inline-block px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase mb-6 border border-[#C5A059]/30" style={{ color: '#C5A059', backgroundColor: 'rgba(197, 160, 89, 0.1)' }}>
+                Programa de Recompensas
               </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">
                 Beneficios Exclusivos
               </h2>
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                La lealtad tiene un sabor excepcional. Descarga nuestra app y <span style={{ color: '#C5A059' }} className="font-semibold">acumula puntos en cada compra</span>. Canjea tus puntos por cortes prime y experiencias únicas directamente desde tu celular.
+              <p className="text-gray-400 text-lg mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">
+                La lealtad tiene un sabor excepcional. Inicia sesión en tu portal web y <span style={{ color: '#C5A059' }} className="font-medium">vincula tu tarjeta física de cliente frecuente</span>. Acumula puntos en cada pedido en línea o en sucursal.
               </p>
               
-              <ul className="space-y-4 mb-8 text-left inline-block lg:block">
+              <ul className="space-y-5 mb-10 text-left inline-block lg:block">
                 {[
-                  '1 punto por cada $100 MXN de compra',
-                  'Escanea tu código QR en sucursal',
-                  'Gestiona tus recompensas en línea'
+                  '1 punto por cada $100 MXN de compra.',
+                  'Vincula tu tarjeta física actual fácilmente.',
+                  'Canjea puntos por cortes y accesorios premium.'
                 ].map((benefit, idx) => (
-                  <li key={idx} className="flex items-center text-gray-300">
-                    <svg className="w-5 h-5 mr-3 flex-shrink-0" style={{ color: '#C5A059' }} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  <li key={idx} className="flex items-center text-gray-300 font-light">
+                    <svg className="w-6 h-6 mr-4 flex-shrink-0" style={{ color: '#C5A059' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     {benefit}
                   </li>
                 ))}
               </ul>
 
-              <button 
-                className="w-full sm:w-auto px-8 py-4 font-bold text-lg rounded-lg shadow-xl transition-all hover:-translate-y-1 block mx-auto lg:mx-0"
-                style={{ backgroundColor: '#C5A059', color: '#1A1A1A' }}
-              >
-                Descargar App
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <button 
+                  className="px-8 py-4 text-sm uppercase tracking-widest font-bold rounded-sm shadow-xl transition-all hover:bg-white hover:text-black"
+                  style={{ backgroundColor: '#C5A059', color: '#1A1A1A' }}
+                >
+                  Inicia Sesión
+                </button>
+                <button 
+                  className="px-8 py-4 text-sm uppercase tracking-widest font-bold rounded-sm border transition-all hover:bg-white/5"
+                  style={{ borderColor: '#C5A059', color: '#C5A059' }}
+                >
+                  Vincular Tarjeta
+                </button>
+              </div>
             </div>
 
             {/* Loyalty App Visual */}
-            <div className="flex-1 w-full max-w-md mt-8 lg:mt-0 flex justify-center">
-              <img 
+            <div className="flex-1 w-full max-w-lg mt-8 lg:mt-0 flex justify-center relative">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent z-20 bottom-0 h-1/4"></div>
+              <motion.img 
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.4 }}
                 src="/las-maravillas-ecommerce/loyalty_app.png" 
-                alt="App de Recompensas Las Maravillas" 
-                className="w-full h-auto max-w-sm rounded-xl shadow-2xl transform lg:-rotate-2 transition-transform hover:rotate-0"
+                alt="Portal de Recompensas Las Maravillas" 
+                className="w-full h-auto max-w-sm rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform lg:-rotate-3 border border-gray-800"
               />
             </div>
 
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

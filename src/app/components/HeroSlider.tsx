@@ -1,21 +1,29 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const slides = [
   {
     id: 1,
     title: 'La Excelencia en Cada Corte',
-    subtitle: 'Nuestra boutique ofrece selección Prime y Reserva para tu parrilla.',
-    image: '/las-maravillas-ecommerce/hero_asador.png',
+    subtitle: 'Selección Prime y Reserva para tu parrilla. Sabor inigualable.',
+    image: '/las-maravillas-ecommerce/hero_slider_2.png',
     cta: 'Pedir Ahora'
   },
   {
     id: 2,
-    title: 'Beneficios Exclusivos',
-    subtitle: 'Acumula puntos en cada compra de nuestros cortes prime.',
-    image: '/las-maravillas-ecommerce/hero_asador.png',
-    cta: 'Ver Recompensas'
+    title: 'La Experiencia Premium',
+    subtitle: 'Disfruta de cortes con maduración perfecta y calidad de restaurante.',
+    image: '/las-maravillas-ecommerce/hero_slider_3.png',
+    cta: 'Ver Catálogo'
+  },
+  {
+    id: 3,
+    title: 'Calidad de Origen',
+    subtitle: 'Piezas seleccionadas con el marmoleo exacto para los paladares más exigentes.',
+    image: '/las-maravillas-ecommerce/hero_slider_4.png',
+    cta: 'Descubrir'
   }
 ];
 
@@ -25,50 +33,63 @@ export default function HeroSlider() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="relative w-full h-[600px] overflow-hidden">
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-          }`}
+    <div className="relative w-full h-[650px] overflow-hidden bg-black">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+          className="absolute inset-0 z-0"
         >
           <div 
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${slide.image})` }}
+            style={{ backgroundImage: `url('${slides[currentSlide].image}')` }}
           />
-          <div className="absolute inset-0 bg-black/50" />
-          
-          <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-wide drop-shadow-lg">
-              {slide.title}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/60" />
+        </motion.div>
+      </AnimatePresence>
+      
+      <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-4 max-w-4xl mx-auto">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -30, opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex flex-col items-center"
+          >
+            <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 tracking-wide drop-shadow-2xl">
+              {slides[currentSlide].title}
             </h1>
-            <p className="text-lg md:text-2xl text-gray-200 mb-8 max-w-2xl font-light">
-              {slide.subtitle}
+            <p className="text-xl md:text-2xl text-gray-200 mb-10 font-light drop-shadow-md">
+              {slides[currentSlide].subtitle}
             </p>
             <button 
-              className="px-8 py-3 text-lg font-semibold rounded shadow-lg transition-transform hover:scale-105"
-              style={{ backgroundColor: '#6B1D2A', color: '#C5A059' }}
+              className="px-10 py-4 text-sm uppercase tracking-widest font-bold rounded-sm shadow-2xl transition-all hover:bg-white hover:text-black"
+              style={{ backgroundColor: '#C5A059', color: '#1A1A1A' }}
             >
-              {slide.cta}
+              {slides[currentSlide].cta}
             </button>
-          </div>
-        </div>
-      ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
       
       {/* Navigation Dots */}
-      <div className="absolute bottom-6 left-0 right-0 z-30 flex justify-center gap-3">
+      <div className="absolute bottom-10 left-0 right-0 z-30 flex justify-center gap-4">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              index === currentSlide ? 'bg-[#C5A059]' : 'bg-white/50 hover:bg-white/80'
+            className={`w-3 h-3 rounded-full transition-all duration-500 ${
+              index === currentSlide ? 'bg-[#C5A059] scale-125' : 'bg-white/40 hover:bg-white/80'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
