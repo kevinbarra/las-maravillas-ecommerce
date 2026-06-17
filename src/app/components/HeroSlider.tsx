@@ -6,16 +6,16 @@ const slides = [
   {
     id: 1,
     title: 'La Excelencia en Cada Corte',
-    subtitle: 'Cortes premium para los paladares más exigentes.',
-    image: 'https://images.unsplash.com/photo-1603048297172-c92544798d5e?q=80&w=2070&auto=format&fit=crop',
-    cta: 'Comprar Ahora'
+    subtitle: 'Nuestra boutique ofrece selección Prime y Reserva para tu parrilla.',
+    image: '/las-maravillas-ecommerce/hero_asador.png',
+    cta: 'Pedir Ahora'
   },
   {
     id: 2,
-    title: 'Únete al Club Las Maravillas',
-    subtitle: 'Beneficios exclusivos y acumulación de puntos en cada compra.',
-    image: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=2070&auto=format&fit=crop',
-    cta: 'Unirme al Club'
+    title: 'Beneficios Exclusivos',
+    subtitle: 'Acumula puntos en cada compra de nuestros cortes prime.',
+    image: '/las-maravillas-ecommerce/hero_asador.png',
+    cta: 'Ver Recompensas'
   }
 ];
 

@@ -14,7 +14,7 @@ const products = [
     description: "Marmoleo excepcional y jugosidad inigualable para tu parrilla.",
     price: 1250.00,
     unit: "kg",
-    image: "https://images.unsplash.com/photo-1603048297172-c92544798d5e?q=80&w=2940&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=2070&auto=format&fit=crop",
     badge: "Prime"
   },
   {
@@ -94,7 +94,8 @@ export default function Home() {
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-serif text-gold mb-4">Cortes Insignia</h2>
-              <div className="w-24 h-1 bg-wine mx-auto"></div>
+              <div className="w-24 h-1 bg-wine mx-auto mb-6"></div>
+              <p className="text-xl text-gray-300 font-medium">Pide en Línea para Pick-up en Sucursal o Envío a Domicilio</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

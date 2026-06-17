@@ -13,7 +13,13 @@ export default function LogisticsSection() {
     {
       number: '02',
       title: 'Elige Pick-up o Envío',
-      description: 'Recoge en nuestras sucursales de Veracruz o Puebla, o recibe directamente en tu domicilio.',
+      description: (
+        <>
+          Recoge tu pedido en nuestras sucursales:
+          <br /><span className="font-bold text-wine">Puebla:</span> Plaza Elysee (Angelópolis).
+          <br /><span className="font-bold text-wine">Veracruz:</span> Costa Verde y Plaza Veleros (Riviera Veracruzana).
+        </>
+      ),
       icon: (
         <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
       )
