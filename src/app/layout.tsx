@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "La excelencia en cada corte. Selección Prime para paladares exigentes en Puebla y Veracruz.",
 };
 
+import { CartProvider } from "./context/CartContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +29,9 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${montserrat.variable} antialiased`}
       >
-        {children}
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
