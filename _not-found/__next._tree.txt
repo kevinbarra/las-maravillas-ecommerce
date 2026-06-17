@@ -1,2 +1,2 @@
-:HL["/las-maravillas-ecommerce/_next/static/chunks/3dqcfm4b-umw_.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"ZiYJZInd1c2wZqJolsNO8"}
+:HL["/las-maravillas-ecommerce/_next/static/chunks/2nj2yb-cf_ucf.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"1fzBLjDAmf9ssA6pzkz5n"}
