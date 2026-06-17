@@ -6,24 +6,24 @@ import { motion, AnimatePresence } from 'framer-motion';
 const slides = [
   {
     id: 1,
-    title: 'La Excelencia en Cada Corte',
-    subtitle: 'Selección Prime y Reserva para tu parrilla. Sabor inigualable.',
+    title: '4 Generaciones de Tradición',
+    subtitle: 'Del Rancho a tu Mesa. 100% Orgullo de Los Tuxtlas, Veracruz.',
     image: '/las-maravillas-ecommerce/hero_slider_2.png',
-    cta: 'Pedir Ahora'
+    cta: 'Nuestra Historia'
   },
   {
     id: 2,
-    title: 'La Experiencia Premium',
-    subtitle: 'Disfruta de cortes con maduración perfecta y calidad de restaurante.',
+    title: 'La Excelencia Brangus',
+    subtitle: 'Genética superior perfectamente adaptada, garantizando sabor y terneza inigualables.',
     image: '/las-maravillas-ecommerce/hero_slider_3.png',
     cta: 'Ver Catálogo'
   },
   {
     id: 3,
-    title: 'Calidad de Origen',
-    subtitle: 'Piezas seleccionadas con el marmoleo exacto para los paladares más exigentes.',
+    title: 'Línea Reserva',
+    subtitle: 'Nuestros cortes supremos con Trazabilidad Total y Certificación TIF.',
     image: '/las-maravillas-ecommerce/hero_slider_4.png',
-    cta: 'Descubrir'
+    cta: 'Descubrir Reserva'
   }
 ];
 

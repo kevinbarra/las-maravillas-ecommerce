@@ -11,42 +11,42 @@ import { motion } from "framer-motion";
 const meatProducts = [
   {
     id: "ribeye-premium",
-    name: "Ribeye Premium",
-    description: "Marmoleo excepcional y jugosidad inigualable para tu parrilla.",
+    name: "Ribeye Reserva",
+    description: "Marmoleo excepcional y jugosidad inigualable de nuestra Línea Reserva.",
     price: 1250.00,
     unit: "kg",
     image: "/las-maravillas-ecommerce/product_ribeye.png",
-    badge: "Prime",
+    badge: "Línea Reserva",
     pairing: "Salsa de Habanero Tatemado"
   },
   {
     id: "tomahawk-reserva",
     name: "Tomahawk Reserva",
-    description: "El rey de la parrilla, maduración perfecta y hueso francés.",
+    description: "El rey de la parrilla. Corte insignia de nuestro Rancho en Los Tuxtlas.",
     price: 1850.00,
     unit: "pza",
     image: "https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?q=80&w=2970&auto=format&fit=crop",
-    badge: "Reserva",
+    badge: "Línea Reserva",
     pairing: "Carbón de Mezquite"
   },
   {
-    id: "picana-wagyu",
-    name: "Picaña Wagyu Cross",
-    description: "Capa de grasa generosa que baña la carne durante la cocción.",
+    id: "picana-brangus",
+    name: "Picaña Brangus",
+    description: "La joya de nuestra genética Brangus. Capa de grasa generosa y sabor local.",
     price: 950.00,
     unit: "kg",
     image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop",
-    badge: null,
+    badge: "Línea Premium",
     pairing: "Sal Ahumada"
   },
   {
     id: "arrachera",
     name: "Arrachera Marinada",
-    description: "Suave, jugosa y lista para el asador con nuestra receta secreta.",
+    description: "Suave, jugosa y lista para el asador con nuestra calidad de origen.",
     price: 420.00,
     unit: "kg",
     image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2787&auto=format&fit=crop",
-    badge: "Best Seller",
+    badge: "Línea Hogar",
     pairing: "Salsa Verde Rústica"
   }
 ];
@@ -120,7 +120,7 @@ export default function Home() {
         ></div>
         {product.badge && (
           <div className={`absolute top-4 right-4 text-[10px] uppercase tracking-widest px-4 py-1.5 font-bold rounded-sm ${
-            product.badge === 'Reserva' || product.badge === 'Premium' ? 'bg-[#1A1A1A] border border-[#C5A059] text-[#C5A059]' : 'bg-[#6B1D2A] text-white'
+            product.badge === 'Línea Reserva' ? 'bg-[#1A1A1A] border border-[#C5A059] text-[#C5A059]' : 'bg-[#6B1D2A] text-white'
           }`}>
             {product.badge}
           </div>
@@ -158,21 +158,24 @@ export default function Home() {
       <main className="pt-20 overflow-hidden">
         <HeroSlider />
         
-        {/* Trust Bar */}
+        {/* Trust Bar (Rancho Las Maravillas Authentic) */}
         <section className="bg-[#1A1A1A] py-12 border-y border-[#C5A059]/10">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-[#C5A059]/10">
-              <div className="flex flex-col items-center justify-center pt-4 md:pt-0">
+              <div className="flex flex-col items-center justify-center pt-4 md:pt-0 px-4">
                 <svg className="w-8 h-8 text-[#C5A059] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
-                <h3 className="font-serif text-lg tracking-wide text-white">Calidad USDA Prime</h3>
+                <h3 className="font-serif text-lg tracking-wide text-white mb-2">Certificación TIF</h3>
+                <p className="text-xs text-gray-400 font-light tracking-wide uppercase">El máximo estándar de inocuidad en México</p>
               </div>
-              <div className="flex flex-col items-center justify-center pt-4 md:pt-0">
+              <div className="flex flex-col items-center justify-center pt-4 md:pt-0 px-4">
                 <svg className="w-8 h-8 text-[#C5A059] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <h3 className="font-serif text-lg tracking-wide text-white">Cadena de Frío Garantizada</h3>
+                <h3 className="font-serif text-lg tracking-wide text-white mb-2">Trazabilidad Total</h3>
+                <p className="text-xs text-gray-400 font-light tracking-wide uppercase">Ciclo completo: Del rancho a tu mesa</p>
               </div>
-              <div className="flex flex-col items-center justify-center pt-4 md:pt-0">
+              <div className="flex flex-col items-center justify-center pt-4 md:pt-0 px-4">
                 <svg className="w-8 h-8 text-[#C5A059] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <h3 className="font-serif text-lg tracking-wide text-white">Origen Sustentable</h3>
+                <h3 className="font-serif text-lg tracking-wide text-white mb-2">Orgullo Veracruzano</h3>
+                <p className="text-xs text-gray-400 font-light tracking-wide uppercase">Nacidos y criados en Los Tuxtlas, Veracruz</p>
               </div>
             </div>
           </div>
@@ -187,7 +190,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="text-center mb-20"
             >
-              <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Cortes Insignia</h2>
+              <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Nuestros Cortes</h2>
               <div className="w-20 h-1 bg-[#C5A059] mx-auto mb-8"></div>
               <p className="text-xl text-gray-400 font-light tracking-wide">Pide en Línea para Pick-up en Sucursal o Envío a Domicilio</p>
             </motion.div>
@@ -211,12 +214,12 @@ export default function Home() {
               className="max-w-3xl mx-auto"
             >
               <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">The Butcher's Block</h2>
-              <p className="text-xl text-gray-400 font-light tracking-wide mb-12">Navega por nuestra guía interactiva de cortes para encontrar el perfil de sabor perfecto para tu próxima parrillada.</p>
+              <p className="text-xl text-gray-400 font-light tracking-wide mb-12">Descubre nuestra genética Brangus. Navega por la guía interactiva para conocer el origen y perfil de nuestra Línea Reserva.</p>
               
               <div className="relative w-full aspect-[2/1] border border-[#C5A059]/30 bg-black/50 rounded-2xl flex items-center justify-center group cursor-pointer overflow-hidden backdrop-blur-sm">
                 <div className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1603048297172-c92544798d5e?q=80&w=2940&auto=format&fit=crop')" }}></div>
                 <div className="z-10 bg-black/80 px-8 py-4 rounded-full border border-[#C5A059] text-[#C5A059] font-bold tracking-widest uppercase text-sm hover:bg-[#C5A059] hover:text-black transition-colors">
-                  Abrir Guía Interactiva
+                  Abrir Guía Brangus
                 </div>
               </div>
             </motion.div>
@@ -262,6 +265,29 @@ export default function Home() {
         </section>
 
         <LogisticsSection />
+        
+        {/* Alianzas Estratégicas */}
+        <section className="py-16 bg-[#0a0a0a] border-t border-[#111]">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8">Nuestras Alianzas Estratégicas</h3>
+            <div className="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+              <div className="flex flex-col items-center">
+                <span className="text-xl font-serif text-white font-bold">FC BEEF</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-xl font-sans text-white font-black tracking-tighter">CIASA</span>
+                <span className="text-[8px] text-gray-400 tracking-widest">AGROPECUARIA TIF 353</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-lg font-serif text-white font-medium border-2 border-white rounded-full px-4 py-1">GRUPO VERACARNE</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-xl font-serif text-[#C5A059] font-bold">MEXICAN BEEF</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <LoyaltySection />
 
         <footer className="bg-black py-12 border-t border-gray-900">
