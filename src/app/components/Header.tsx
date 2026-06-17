@@ -5,6 +5,10 @@ import { useState, useEffect } from 'react';
 
 export default function Header() {
   const { openSidebar, cartCount } = useCart();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+  // Duplicate openSidebar removed
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedCity, setSelectedCity] = useState('Veracruz');
 
@@ -28,7 +32,7 @@ export default function Header() {
         
         {/* Left Section: Menu & Store Selector */}
         <div className="flex items-center gap-6">
-          <button className="p-2 hover:bg-gray-800/10 rounded-full transition-colors" aria-label="Menu">
+          <button onClick={toggleMenu} className="p-2 hover:bg-gray-800/10 rounded-full transition-colors" aria-label="Menu">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -94,6 +98,29 @@ export default function Header() {
           </button>
         </div>
       </div>
+    <!-- Mobile Off-canvas Menu -->
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur" onClick={closeMenu}>
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'tween' }}
+            className="absolute right-0 top-0 h-full w-64 bg-[#111] p-6"
+            onClick={e => e.stopPropagation()}
+          >
+            <button onClick={closeMenu} className="p-2 mb-4 text-white" aria-label="Close menu">
+              ✕
+            </button>
+            <nav className="flex flex-col space-y-4 text-white">
+              <a href="#" className="hover:text-[#C5A059]">Inicio</a>
+              <a href="#catalog" className="hover:text-[#C5A059]">Catálogo</a>
+              <a href="#raices" className="hover:text-[#C5A059]">Nuestras Raíces</a>
+              <a href="#contact" className="hover:text-[#C5A059]">Contacto</a>
+            </nav>
+          </motion.div>
+        </div>
+      )}
     </header>
   );
 }

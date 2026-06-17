@@ -6,7 +6,8 @@ import HeroSlider from "./components/HeroSlider";
 import LogisticsSection from "./components/LogisticsSection";
 import LoyaltySection from "./components/LoyaltySection";
 import { useCart } from "./context/CartContext";
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const meatProducts = [
   {
@@ -92,6 +93,7 @@ const accessoryProducts = [
 
 export default function Home() {
   const { addToCart, openSidebar } = useCart();
+  const [isButcherOpen, setIsButcherOpen] = useState(false);
 
   const handleAddToCart = (product: any) => {
     addToCart({
@@ -216,7 +218,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">The Butcher's Block</h2>
               <p className="text-xl text-gray-400 font-light tracking-wide mb-12">Descubre nuestra genética Brangus. Navega por la guía interactiva para conocer el origen y perfil de nuestra Línea Reserva.</p>
               
-              <div className="relative w-full aspect-[2/1] border border-[#C5A059]/30 bg-black/50 rounded-2xl flex items-center justify-center group cursor-pointer overflow-hidden backdrop-blur-sm">
+              <div className="relative w-full aspect-[2/1] border border-[#C5A059]/30 bg-black/50 rounded-2xl flex items-center justify-center group cursor-pointer overflow-hidden backdrop-blur-sm" onClick={() => setIsButcherOpen(true)}>
                 <div className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1603048297172-c92544798d5e?q=80&w=2940&auto=format&fit=crop')" }}></div>
                 <div className="z-10 bg-black/80 px-8 py-4 rounded-full border border-[#C5A059] text-[#C5A059] font-bold tracking-widest uppercase text-sm hover:bg-[#C5A059] hover:text-black transition-colors">
                   Abrir Guía Brangus
